@@ -25,6 +25,5 @@
         android:text="token"
         tools:layout_editor_absoluteX="153dp"
         tools:layout_editor_absoluteY="94dp" />
-
-
+    
 </android.support.constraint.ConstraintLayout>
