@@ -1,8 +1,11 @@
 package org.devheap.circlesapp.fragments;
 
 import android.app.Fragment;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import android.Manifest;
 import org.devheap.circlesapp.R;
 
 /**
@@ -101,7 +105,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
-
+                
                 // Add a marker in Innopolis and move the camera
                 LatLng sydney = new LatLng(55.75, 48.75);
                 googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
@@ -121,12 +125,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     /**
@@ -166,5 +164,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onLowMemory() {
         super.onLowMemory();
         mMapView.onLowMemory();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 }

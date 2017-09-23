@@ -1,3 +1,5 @@
+package org.devheap.circlesapp.presenter;
+
 interface MainContract {
     interface View{
         void locationHiddenToast();

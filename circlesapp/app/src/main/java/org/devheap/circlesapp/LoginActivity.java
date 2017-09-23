@@ -26,6 +26,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import org.devheap.circlesapp.presenter.ServerRequestProvider;
+
 public class LoginActivity extends AppCompatActivity {
 
     private SignInButton mGoogleBtn;
@@ -33,7 +35,6 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
     private static final String TAG = "LOGIN_ACTIVITY";
-
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
@@ -43,21 +44,23 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ServerRequestProvider.getInstance();
+
         mAuth = FirebaseAuth.getInstance();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
-                if(firebaseAuth.getCurrentUser() != null){
+                if (firebaseAuth.getCurrentUser() != null) {
                     FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
                     mUser.getToken(true)
                             .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                                 public void onComplete(@NonNull Task<GetTokenResult> task) {
-                                    String idToken;
                                     if (task.isSuccessful()) {
-                                        idToken = task.getResult().getToken();
-                                        ((TextView) findViewById(R.id.token_text_field)).setText(idToken);
+                                        String token = task.getResult().getToken();
+                                        ServerRequestProvider.setToken(token);
+                                        ((TextView) findViewById(R.id.token_text_field)).setText(token);
                                         // Send token to your backend via HTTPS
                                         // ...
                                     } else {
@@ -65,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 }
                             });
-//                    startActivity(new Intent(LoginActivity.this, NavigationActivity.class));
+                    startActivity(new Intent(LoginActivity.this, NavigationActivity.class));
                 }
             }
         };
@@ -87,7 +90,6 @@ public class LoginActivity extends AppCompatActivity {
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-
 
         mGoogleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,8 +130,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
-
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
@@ -153,5 +153,4 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
-
 }

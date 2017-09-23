@@ -2,6 +2,7 @@ package org.devheap.circlesapp;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,11 +19,16 @@ import android.view.MenuItem;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.devheap.circlesapp.fragments.MapFragment;
+import org.devheap.circlesapp.fragments.SetIPFragment;
+import org.devheap.circlesapp.presenter.Location;
+import org.devheap.circlesapp.presenter.ServerRequestProvider;
 
 public class NavigationActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements  NavigationView.OnNavigationItemSelectedListener,
+                    SetIPFragment.OnFragmentInteractionListener {
 
     private MapFragment mapFragment;
+    private SetIPFragment setIPFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +41,9 @@ public class NavigationActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, ServerRequestProvider.getApiUrl(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                ServerRequestProvider.sendLocation(new Location());
             }
         });
 
@@ -50,6 +57,7 @@ public class NavigationActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         mapFragment = new MapFragment();
+        setIPFragment = new SetIPFragment();
     }
 
     @Override
@@ -94,8 +102,8 @@ public class NavigationActivity extends AppCompatActivity
 
         if (id == R.id.nav_map) {
             fTrans.replace(R.id.container, mapFragment);
-        } else if (id == R.id.nav_gallery) {
-
+        } else if (id == R.id.set_ip) {
+            fTrans.replace(R.id.container, setIPFragment);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
@@ -122,5 +130,11 @@ public class NavigationActivity extends AppCompatActivity
             startActivity(new Intent(NavigationActivity.this, LoginActivity.class));
         }
         mAuth.signOut();
+    }
+
+    // SetIPFragment interface
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
