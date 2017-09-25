@@ -15,6 +15,7 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp" />
 
+
     <EditText
         android:id="@+id/token_text_field"
         android:layout_width="wrap_content"
@@ -24,5 +25,4 @@
         android:text="token"
         tools:layout_editor_absoluteX="153dp"
         tools:layout_editor_absoluteY="94dp" />
-
 </android.support.constraint.ConstraintLayout>
