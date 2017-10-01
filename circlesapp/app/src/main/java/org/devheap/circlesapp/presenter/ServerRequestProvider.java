@@ -1,5 +1,7 @@
 package org.devheap.circlesapp.presenter;
 
+import org.devheap.circlesapp.model.Location;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
