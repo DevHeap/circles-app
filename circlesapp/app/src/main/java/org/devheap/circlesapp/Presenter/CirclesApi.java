@@ -1,5 +1,7 @@
 package org.devheap.circlesapp.presenter;
 
+import org.devheap.circlesapp.model.Location;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;

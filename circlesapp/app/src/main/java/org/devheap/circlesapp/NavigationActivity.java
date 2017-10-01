@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import org.devheap.circlesapp.fragments.MapFragment;
 import org.devheap.circlesapp.fragments.SetIPFragment;
-import org.devheap.circlesapp.presenter.Location;
+import org.devheap.circlesapp.model.Location;
 import org.devheap.circlesapp.presenter.ServerRequestProvider;
 
 public class NavigationActivity extends AppCompatActivity
